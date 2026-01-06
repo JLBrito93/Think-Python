@@ -5,7 +5,7 @@ import math
 
 t=turtle.Turtle()
 t.shape("turtle")
-t.speed(3)
+t.speed(5)
 
 
 # def polygon(sides, length):
@@ -79,16 +79,71 @@ def rhombus_2(side, angle):
     side_2 = side
     parallelogram(side_1, side_2, angle)
 
+#P4
+
 def triangle(side_1, angle):
-    side_2 = math.sqrt(2*(side_1**2)-2*(side_1**2) * math.cos(angle))
-    angle_2 = angle/2
+    side_2= side_1 * (math.sqrt(2*(1-math.cos(math.radians(angle)))))
+    #side_2=abs(2*side_1 * math.cos(angle))
+    #side_2 = math.sqrt(2*(side_1**2)-(2*(side_1**2) * math.cos(angle)))
+    angle_2 = (180-angle)/2
     t.forward(side_1)
     t.left(180-angle_2)
     t.forward(side_2)
-    t.goto(0,0)
+    t.left(180-angle_2)
+    t.forward(side_1)
+    t.left(180)
+
+def draw_pie(n):
+    side_1=100
+    angle = 360/n
+    for i in range(n):
+        triangle(side_1, angle)
+
+#P5
+
+def polyline_r(n, length, angle):
+    for i in range(n):
+        t.forward(length)
+        t.right(angle)
+
+def arc_2(radius, angle):
+    arc_length = 2 * math.pi * radius * angle /360
+    n=30
+    length=arc_length/n
+    step_angle=angle/n
+    polyline_r(n, length, step_angle)
+
+def petal(radius, angle):
+    arc(radius, angle)
+    t.left(180-angle)
+    arc(radius, angle)
+    t.left(180)
+
+    # t.penup()
+    # t.goto(0,0)
+    # t.pendown()
+    # arc_2(radius, angle)
+    # t.penup()
+    # t.goto(0, 0)
+    # t.pendown()
+
+# for i in range(4):
+#     petal(100,45)
+#     t.left(90)
+
+def flower(radius, angle, n):
+    for i in range(n):
+        petal(radius, angle)
 
 
-triangle(55,90)
+flower(150, 90, 5)
+
+#petal(200,35)
+
+# angle=60
+# arc(100, angle)
+# t.left(180-angle)
+# arc(100, angle)
 
 turtle.update()
 turtle.done()
